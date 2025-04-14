@@ -1,35 +1,33 @@
-<!doctype html>
-<html>
-<head>
-</head>
-<body>
-    <script>
-        const checkCookiesEnable = () => {
-            let isCookieEnabled = (window.navigator.cookieEnabled) ? true : false;
-            if (typeof window.navigator.cookieEnabled == "undefined" && !isCookieEnabled) {
-                document.cookie = "testcookie";
-                isCookieEnabled = (document.cookie.indexOf("testcookie") != -1) ? true : false;
-            }
+<!DOCTYPE html>
 
-            return isCookieEnabled;
-        }
-        (function () {
-            window.addEventListener('message', event => {
-                try {
-                    let data = JSON.parse(event.data)
-                    if (data['test'] !== 'cookie')
-                        return
-                    let result = checkCookiesEnable()
-                    parent.postMessage(JSON.stringify({
-                        'result': result
-                    }), event.origin)
-                }
-                catch (e) {
-                    console.error(e)
-                }
-            });
-        })();
-    </script>
+<html lang="en">
+
+<head><title>Cookie Test</title></head>
+
+<body>
+
+<script>
+
+  try {
+
+    document.cookie = "cookiesEnabled=1; SameSite=None; Secure";
+
+    setTimeout(() => {
+
+      const success = document.cookie.includes('cookiesEnabled=1');
+
+      window.parent.postMessage({ cookiesEnabled: success }, '*');
+
+    }, 50);
+
+  } catch (e) {
+
+    window.parent.postMessage({ cookiesEnabled: false }, '*');
+
+  }
+
+</script>
+
 </body>
 
 </html>
