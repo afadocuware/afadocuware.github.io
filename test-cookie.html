@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html>
 
-<head><title>Cookie Test</title></head>
+  <head>
 
-<body>
+    <meta charset="UTF-8" />
 
-<script>
+    <title>Third-party cookie check</title>
 
-  try {
+  </head>
 
-    document.cookie = "cookiesEnabled=1; SameSite=None; Secure";
+  <body>
 
-    setTimeout(() => {
+    <script>
 
-      const success = document.cookie.includes('cookiesEnabled=1');
+      document.cookie = 'thirdpartytest=1; SameSite=None; Secure';
 
-      window.parent.postMessage({ cookiesEnabled: success }, '*');
+ 
 
-    }, 50);
+      setTimeout(() => {
 
-  } catch (e) {
+        const cookiesEnabled = document.cookie.includes('thirdpartytest=');
 
-    window.parent.postMessage({ cookiesEnabled: false }, '*');
+        window.parent.postMessage({ cookiesEnabled }, '*');
 
-  }
+      }, 100);
 
-</script>
+    </script>
 
-</body>
+  </body>
 
 </html>
