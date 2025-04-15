@@ -22,7 +22,7 @@
 
         const cookiesEnabled = document.cookie.includes('thirdpartytest=');
 
-        window.parent.postMessage({ cookiesEnabled }, '*');
+        window.parent.postMessage({ cookiesEnabled, document.cookie  }, '*');
 
       }, 100);
 
